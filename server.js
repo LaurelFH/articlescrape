@@ -5,6 +5,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var path = require("path");
 
 
 
@@ -58,7 +59,7 @@ app.get("/", function(req, res) {
 
 
 //set up the site to be scraped with request and cheerio info 
-app.get("/scrape", function(req, res) {
+app.get("/scraped", function(req, res) {
   // First, we grab the body of the html with request
   request("http://www.unc.edu/spotlight/", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -96,6 +97,18 @@ app.get("/scrape", function(req, res) {
   // Tell the browser that we finished scraping the text
   res.send("News Scrape Complete!");
 });
+
+//set up the requests for the saved articles page 
+app.get("/saved", function(req, res){
+
+  Article.find({}, function(error, doc){{
+
+
+  }});
+
+});
+
+
 
 
 
@@ -164,6 +177,11 @@ app.post("/articles/:id", function(req, res) {
   });
 });
 
+
+//HTML ROUTE FOR /ARTICLES 
+ // app.get("/articles", function(req, res) {
+ //    res.sendFile(path.join(__dirname, "/public/articles.html"));
+ //  });
 
 
 //LISTENING AND PORT INFORMATION 
