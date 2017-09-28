@@ -9,8 +9,8 @@ var mongoose = require("mongoose");
 
 
 //LINKS TO MODEL FILES IN MODELS FOLDER
-var Article = require(".models/article.js");
-var Note = require(".models/note.js");
+var Article = require("./models/article.js");
+var Note = require("./models/note.js");
 
 
 //SCRAPING TOOL SETUP
@@ -56,13 +56,56 @@ app.get("/", function(req, res) {
   res.send("Welcome to Digitimes: your home for quick news reviews");
 });
 
+
+//set up the site to be scraped with request and cheerio info 
+app.get("/scrape", function(req, res) {
+  // First, we grab the body of the html with request
+  request("http://www.unc.edu/spotlight/", function(error, response, html) {
+    // Then, we load that into cheerio and save it to $ for a shorthand selector
+    var $ = cheerio.load(html);
+    // Now, we grab every h2 within an article tag, and do the following:
+    //COULD ALSO BE H5 ELEMENTS ON THIS PAGE-- DOUBLE CHECK THE DIV CLASSES TOO FOR THE LI
+    $("h3").each(function(i, element) {
+
+      // Save an empty result object
+      var result = {};
+      console.log("this is the result of h3 at unc spotlight:"+ result);
+
+      // Add the text and href of every link, and save them as properties of the result object
+      result.title = $(this).children("a").text();
+      result.link = $(this).children("a").attr("href");
+
+      // Using our Article model, create a new entry
+      // This effectively passes the result object to the entry (and the title and link)
+      var entry = new Article(result);
+
+      // Now, save that entry to the db
+      entry.save(function(err, doc) {
+        // Log any errors
+        if (err) {
+          console.log(err);
+        }
+        // Or log the doc
+        else {
+          console.log(doc);
+        }
+      });
+
+    });
+  });
+  // Tell the browser that we finished scraping the text
+  res.send("News Scrape Complete!");
+});
+
+
+
 // This will get the articles we scraped from the mongoDB
 app.get("/articles", function(req, res) {
   // Grab every doc in the Articles array
   Article.find({}, function(error, doc) {
     // Log any errors
     if (error) {
-      console.log(error);
+      console.log("there was an error getting all articles:"+ error);
     }
     // Or send the doc to the browser as a json object
     else {
@@ -71,7 +114,7 @@ app.get("/articles", function(req, res) {
   });
 });
 
-// Grab an article by it's ObjectId
+// Grab an article by its ObjectId
 app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   Article.findOne({ "_id": req.params.id })
@@ -81,7 +124,7 @@ app.get("/articles/:id", function(req, res) {
   .exec(function(error, doc) {
     // Log any errors
     if (error) {
-      console.log(error);
+      console.log("there was an error getting the artile by its objectID:"+ error);
     }
     // Otherwise, send the doc to the browser as a json object
     else {
@@ -122,44 +165,6 @@ app.post("/articles/:id", function(req, res) {
 });
 
 
-//set up the site to be scraped with request and cheerio info 
-app.get("/scrape", function(req, res) {
-  // First, we grab the body of the html with request
-  request("http://www.wired.com/", function(error, response, html) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
-    var $ = cheerio.load(html);
-    // Now, we grab every h2 within an article tag, and do the following:
-    //COULD ALSO BE H5 ELEMENTS ON THIS PAGE-- DOUBLE CHECK THE DIV CLASSES TOO FOR THE LI
-    $("h2").each(function(i, element) {
-
-      // Save an empty result object
-      var result = {};
-
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
-
-      // Using our Article model, create a new entry
-      // This effectively passes the result object to the entry (and the title and link)
-      var entry = new Article(result);
-
-      // Now, save that entry to the db
-      entry.save(function(err, doc) {
-        // Log any errors
-        if (err) {
-          console.log(err);
-        }
-        // Or log the doc
-        else {
-          console.log(doc);
-        }
-      });
-
-    });
-  });
-  // Tell the browser that we finished scraping the text
-  res.send("News Scrape Complete!");
-});
 
 //LISTENING AND PORT INFORMATION 
 app.listen(3000, function() {
