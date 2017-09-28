@@ -3,6 +3,7 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
+    //with p tags with a data-id 
     $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
   }
 });
@@ -99,4 +100,13 @@ $(document).on("click", "#deletenote", function() {
   // // Also, remove the values entered in the input and textarea for note entry
   // $("#titleinput").val("");
   // $("#bodyinput").val("");
+});
+
+
+//when a user clicks on the scrapenew button
+$(document).on("click", "#scrapenew", function(){
+
+  alert("you scraped new articles");
+
+
 });
