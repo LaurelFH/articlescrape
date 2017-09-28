@@ -98,6 +98,18 @@ app.get("/scraped", function(req, res) {
   res.send("News Scrape Complete!");
 });
 
+//set up the requests for the saved articles page 
+app.get("/saved", function(req, res){
+
+  Article.find({}, function(error, doc){{
+
+
+  }});
+
+});
+
+
+
 
 
 // This will get the articles we scraped from the mongoDB
