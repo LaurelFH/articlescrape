@@ -7,7 +7,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
 var express = require("express");
-var expressHandlebars = require("express-handlebars");
+// var expressHandlebars = require("express-handlebars");
 
 
 
@@ -38,22 +38,22 @@ app.use(express.static("public"));
 
 
 //DATABASE CONFIG WITH MONGOOSE
-// mongoose.connect("mongodb://localhost/articlescrape");
+mongoose.connect("mongodb://localhost/articlescrape");
 // mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
 // mongoURI = 'mongodb://localhost/articlescrape';
 // mongoose.createConnection("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72", {useMongoClient: true});
 
-var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
-                replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };  
-MONGOLAB_URI = "mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72";
+// var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
+//                 replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };  
+// MONGOLAB_URI = "mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72";
 
 // mongoose.connect(process.env.MONGOLAB_URI, function (error) {
 //     if (error) console.error(error);
 //     else console.log('mongo connected');
 // });
 
-mongoose.connect(MONGOLAB_URI, options);
+// mongoose.connect(MONGOLAB_URI, options);
 
 var db = mongoose.connection;
 
@@ -82,7 +82,7 @@ app.get("/", function(req, res) {
 
 
 //set up the site to be scraped with request and cheerio info 
-app.get("/scraped", function(req, res) {
+app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
   request("http://www.unc.edu/spotlight/", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -119,20 +119,9 @@ app.get("/scraped", function(req, res) {
   });
   // Tell the browser that we finished scraping the text
   res.send("News Scrape Complete!");
+  //make the user return to the main page?
+  res.redirect('/');
 });
-
-//set up the requests for the saved articles page 
-// app.get("/saved", function(req, res){
-
-//   Article.find({}, function(error, doc){{
-
-
-//   }});
-
-// });
-
-
-
 
 
 // This will get the articles we scraped from the mongoDB
@@ -160,11 +149,12 @@ app.get("/articles/:id", function(req, res) {
   .exec(function(error, doc) {
     // Log any errors
     if (error) {
-      console.log("there was an error getting the artile by its objectID:"+ error);
+      console.log("there was an error getting the article by its objectID:"+ error);
     }
     // Otherwise, send the doc to the browser as a json object
     else {
-      res.json(doc);
+      // res.json(doc);
+      res.send(doc);
     }
   });
 });
@@ -200,14 +190,7 @@ app.post("/articles/:id", function(req, res) {
   });
 });
 
-
-//HTML ROUTE FOR /ARTICLES 
- // app.get("/articles", function(req, res) {
- //    res.sendFile(path.join(__dirname, "/public/articles.html"));
- //  });
-
-
-//LISTENING AND PORT INFORMATION 
-app.listen(process.env.PORT || 3000, function() {
+//LISTENING AND PORT INFORMATION process.env.PORT || 
+app.listen(3000, function() {
   console.log("App running on port 3000!");
 });

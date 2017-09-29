@@ -19,55 +19,159 @@
 
     <!-- Custom styles for this template -->
     <link href="css/clean-blog.min.css" rel="stylesheet">
+  <!--google font api-->
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 
+    <style type="text/css">
+#notes {
+   text-align: center;
+  font-family: 'Acme', sans-serif;
+
+}
+
+p:hover {
+  font-family: 'Acme', sans-serif;
+  background-color: #99badd;
+  color: white;
+  -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+#articles {
+  font-family: 'Acme', sans-serif;
+    text-align: center;
+ 
+}
+
+#titleinput {
+  font-family: 'Acme', sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+  display: block;
+  -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+#bodyinput {
+  font-family: 'Acme', sans-serif;
+   text-align: left;
+     /*   margin-left: 50%;*/
+  width: 500px;
+  height: 500px;
+  margin-top: 10px;
+  display: block;
+  margin-left: 150px;
+  margin-bottom: 50px;
+  -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+.nav-link, .navbar-brand{
+  font-family: 'Acme', sans-serif;
+  color: white;
+     text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+       font-size: larger;
+}
+#wrapper {
+      /*border: 5px yellow solid;*/
+  max-width: auto;
+  margin-top: 0px;
+/*      text-align: center;*/;
+}
+
+h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: 'Acme', sans-serif;
+}
+h1{
+   -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+       font-family: 'Acme', sans-serif;
+
+}
+.subheading{
+font-family: 'Acme', sans-serif;
+  color: white;
+     text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+  font-size: larger;
+}
+
+.btn {
+  margin: 5px;
+  -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  font-family: 'Acme', sans-serif;
+}
+body{
+
+ /* background-color: #7F5348;*/
+}
+</style>
   </head>
   <body>
 
  <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">News Scraper</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">News Scraper</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-<!--             <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/LaurelFH/articlescrape">Github</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/scraped">Saved Articles</a>
-            </li>
-            <button class="btn btn-primary" type="button" id="scrapenew">Scrape New Articles</button>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('img/home-bg.jpg')">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="site-heading">
-              <h1>UNC Digitimes Spotlight</h1>
-              <span class="subheading">What's in the spotlight today:</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <div id="wrapper">
-      <div id="articles"></div>
-      <div id="notes"></div>
-      <!-- <button id="savenote">Save Note</button>
+          
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/LaurelFH/articlescrape">Github</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/articles">Saved Articles</a>
+        </li>
+        <!-- <button class="btn btn-primary" type="button" id="scrapenew">Scrape New Articles</button> -->
+      </ul>
     </div>
-    <button id="deletenote">Delete Note</button> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </div>
+</nav>
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('img/home-bg2.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>UNC Digitimes Spotlight</h1>
+          <span class="subheading">What's in the spotlight today:</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!--body for the notes and articles-->
+    <div id="wrapper" class="row">
+      <div id="articles" class="col-md-6"></div>
+      <div id="notes" class="col-md-6"></div>
+    </div>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="app.js"></script>
 
    <!-- Bootstrap core JavaScript -->

@@ -1,19 +1,16 @@
 //when a user clicks on the scrapenew button
-$(document).on("click", "#scrapenew", function(){
-  $("#articles").empty();
-  alert("you scraped new articles");
   // Grab the articles as a json
   $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
     //with p tags with a data-id 
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>"+ "<button class ='btn btn-primary' id='savenote'>Save Note</button>"+
+    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>"+ "<button class ='btn btn-primary' id='savearticle'>Save Article</button>"+
     "</div>"+
-    "<button class='btn btn-primary' id='deletenote'>Delete Note</button>");
+    "<button class='btn btn-warning' id='deletearticle'>Delete Article</button>");
     }
   });
-});
+
 
 
 // Whenever someone clicks a p tag
@@ -34,11 +31,11 @@ $(document).on("click", "p", function() {
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
       // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
+      $("#notes").append("<input id='titleinput' name='title' placeholder='Note Title' style='margin: auto; width:50%;'>");
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Record Your Thoughts'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes").append("<button data-id='" + data._id + "' id='savenote' class='btn btn-primary'>Save Note</button>");
 
       // If there's a note in the article
       if (data.note) {
@@ -46,6 +43,8 @@ $(document).on("click", "p", function() {
         $("#titleinput").val(data.note.title);
         // Place the body of the note in the body textarea
         $("#bodyinput").val(data.note.body);
+        //have to make it so the notes are deleted (TODO: separate this from deleting the articles!!!!)
+        $("#notes").append("<button data-id='" + data._id + "' id='deletenote' class='btn btn-warning'>Delete Note</button>");
       }
     });
 });
@@ -83,17 +82,17 @@ $(document).on("click", "#savenote", function() {
 $(document).on("click", "#deletenote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-  alert("you clicked delete");
-//need to use the delete query here or potentially an update (probably delete)
+  alert("You deleted this note");
+//need to use the delete query here or potentially an update (probably delete?)
   //Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
     url: "/articles/" + thisId,
     data: {
       // Value taken from title input
-      title: $("#titleinput").val(),
+      title: "",
       // Value taken from note textarea
-      body: $("#bodyinput").val()
+      body: ""
     }
   })
     // With that done
