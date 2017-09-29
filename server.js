@@ -43,12 +43,17 @@ app.use(express.static("public"));
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
 // mongoURI = 'mongodb://localhost/articlescrape';
 // mongoose.createConnection("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72", {useMongoClient: true});
+
+var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
+                replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };  
 MONGOLAB_URI = "mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72";
 
-mongoose.connect(process.env.MONGOLAB_URI, function (error) {
-    if (error) console.error(error);
-    else console.log('mongo connected');
-});
+// mongoose.connect(process.env.MONGOLAB_URI, function (error) {
+//     if (error) console.error(error);
+//     else console.log('mongo connected');
+// });
+
+mongoose.connect(MONGOLAB_URI, options);
 
 var db = mongoose.connection;
 
