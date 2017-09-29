@@ -37,7 +37,8 @@ app.use(express.static("public"));
 
 //DATABASE CONFIG WITH MONGOOSE
 // mongoose.connect("mongodb://localhost/articlescrape");
-mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
+// mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
+mongoose.connect(process.env.MONGODB_URI);
 var db = mongoose.connection;
 
 //if there was an error connecting 
@@ -186,6 +187,6 @@ app.post("/articles/:id", function(req, res) {
 
 
 //LISTENING AND PORT INFORMATION 
-app.listen(3000, function() {
-  console.log("App running on port 3000!");
+app.listen(process.env.PORT || 3000, function() {
+  console.log("App running on port:"+ PORT);
 });
