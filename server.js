@@ -38,23 +38,21 @@ app.use(express.static("public"));
 
 
 //DATABASE CONFIG WITH MONGOOSE
-mongoose.connect("mongodb://localhost/articlescrape");
+// mongoose.connect("mongodb://localhost/articlescrape");
 // mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
+// MONGOLAB_URI = "mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72";
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
 // mongoURI = 'mongodb://localhost/articlescrape';
 // mongoose.createConnection("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72", {useMongoClient: true});
-
 // var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
 //                 replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };  
-// MONGOLAB_URI = "mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72";
-
 // mongoose.connect(process.env.MONGOLAB_URI, function (error) {
 //     if (error) console.error(error);
 //     else console.log('mongo connected');
 // });
 
 // mongoose.connect(MONGOLAB_URI, options);
-
+mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
 var db = mongoose.connection;
 
 //if there was an error connecting 
@@ -191,6 +189,6 @@ app.post("/articles/:id", function(req, res) {
 });
 
 //LISTENING AND PORT INFORMATION process.env.PORT || 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("App running on port 3000!");
 });
