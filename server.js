@@ -41,8 +41,8 @@ app.use(express.static("public"));
 // mongoose.connect("mongodb://localhost/articlescrape");
 // mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
-mongoURI = 'mongodb://localhost/articlescrape';
-mongoose.connect('mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72' || mongoURI);
+// mongoURI = 'mongodb://localhost/articlescrape';
+mongoose.connect('mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72', {useMongoClient: true});
 var db = mongoose.connection;
 
 //if there was an error connecting 
