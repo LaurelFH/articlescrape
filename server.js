@@ -6,6 +6,8 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
+var express = require("express");
+var expressHandlebars = require("express-handlebars");
 
 
 
@@ -38,7 +40,7 @@ app.use(express.static("public"));
 //DATABASE CONFIG WITH MONGOOSE
 // mongoose.connect("mongodb://localhost/articlescrape");
 // mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
 var db = mongoose.connection;
 
 //if there was an error connecting 
@@ -101,14 +103,14 @@ app.get("/scraped", function(req, res) {
 });
 
 //set up the requests for the saved articles page 
-app.get("/saved", function(req, res){
+// app.get("/saved", function(req, res){
 
-  Article.find({}, function(error, doc){{
+//   Article.find({}, function(error, doc){{
 
 
-  }});
+//   }});
 
-});
+// });
 
 
 
