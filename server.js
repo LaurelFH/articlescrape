@@ -40,7 +40,9 @@ app.use(express.static("public"));
 //DATABASE CONFIG WITH MONGOOSE
 // mongoose.connect("mongodb://localhost/articlescrape");
 // mongoose.connect("mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72");
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/articlescrape");
+mongoURI = 'mongodb://localhost/articlescrape';
+mongoose.connect('mongodb://heroku_zgqnbv72:mgl7s03pakp0is74ut1934nu6v@ds155934.mlab.com:55934/heroku_zgqnbv72' || mongoURI);
 var db = mongoose.connection;
 
 //if there was an error connecting 
@@ -52,6 +54,11 @@ db.on("error", function(error) {
 db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
+
+// mongoose.Promise = global.Promise; // mongoose promises deprecated, use node - mongoosejs.com/docs/promises
+// mongoose.connect(config.db.MONGODB_URI);
+// mongoose.connection.once('open', () => { console.log('MongoDB Connected'); });
+// mongoose.connection.on('error', (err) => { console.log('MongoDB connection error: ', err); });
 
 
 //ALL APP ROUTES 
